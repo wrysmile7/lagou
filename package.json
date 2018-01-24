@@ -1,0 +1,18 @@
+{
+  "name": "lagou",
+  "version": "1.0.0",
+  "description": "",
+  "main": "connect.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hunan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "inspect": "^0.0.2",
+    "mongoose": "^5.0.1",
+    "formidable": "^1.1.1"
+  }
+}

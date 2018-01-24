@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>lagou职位管理</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/pagination.css">
+	<script src="../js/jquery-1.9.1.min.js"></script>
+	<script src="../js/jquery.pagination.js"></script>
+	<script src="../js/jquery.cookie.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../static/artTamplate.js"></script>
+	<script src="../js/job.js"></script>
+	<style type="text/css">
+		header{
+			width: 100%;
+			height: 50px;
+			background: #000;
+		}
+		.header_box{
+			width: 70%;
+			height: 50px;
+			color: #999;
+			margin: auto;
+			line-height: 50px;
+		}
+		.header_box ul{
+			float: left;
+			list-style: none;
+			margin-bottom: 0;
+			padding-left: 0;
+		}
+		.header_box ul li{
+			float: left;
+			padding-right: 25px;
+			cursor: pointer;
+		}
+		.header_box p{
+			width: 80px;
+			float: right;
+			margin-bottom: 0;
+			display: flex;
+			justify-content: space-between;
+		}
+		.header_box span{
+			cursor: pointer;
+		}
+		.header_box span:hover{
+			color: #fff;
+		}
+		a{
+			color: #999;
+		}
+		a:hover{
+			color: #fff;
+			text-decoration: none;
+		}
+		.warp{
+			width: 100%;
+		}
+		.warp p{
+			width: 70%;
+			height: 50px;
+			margin: auto;
+			line-height: 50px;
+		}
+		.warp p span{
+			float: left;
+		}
+		.warp p .tj{
+			float: right;
+			margin-top: 20px;
+		}
+		td{
+			border: 1px solid #ddd;
+			padding-left: 6px;
+			height: 50px;
+			font-size: 12px;
+		}
+		td span{
+			color: #337ab7;
+			margin-right: 5px;
+			cursor: pointer;
+		}
+		td img{
+			width: 50px;
+			height: 50px;
+		}
+		#tip{
+			width: 70%;
+			margin: auto;
+			display: none;
+			text-align: center;
+		}
+		.box{
+			width: 70%;
+			margin: auto;
+			margin-top: 10px;
+		}
+		.pages{
+			float: right;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="header_box">
+			<ul>
+				<li style="font-size: 16px;">拉钩网管理系统</li>
+				<li><span><a href="/index.html">首页</a></span></li>
+				<li><span style="color: #fff;">职位管理</span></li>
+				<li style="display: none;" id="admin"><span><a href="usermanage.html">用户管理</a></span></li>
+			</ul>
+			<p>
+				<span id="login" data-toggle="modal" data-target="#login_box">登录</span>
+				<span id="user_title" data-id=""></span>
+				<span id="regist" data-toggle="modal" data-target="#regist_box">注册</span>
+				<span id="off" style="display: none;">注销</span>
+			</p>
+		</div>
+	</header>
+	<div class="warp">
+		<p><span>职位管理</span><button type="button" class="btn btn-primary btn-xs tj" data-toggle="modal" data-target="#job_box">添加</button></p>
+		<table class="table table-bordered" style="width: 70%;margin: auto;" id="job_list">
+			<tr>
+				<th>序号</th>
+				<th>公司logo</th>
+				<th>职位名称</th>
+				<th>公司名称</th>
+				<th>工作经验</th>
+				<th>职位类型</th>
+				<th>工作地点</th>
+				<th>职位薪资</th>
+				<th>操作</th>
+			</tr>
+		</table>
+		<p id="tip">你还没有添加职位！</p>
+
+		<!-- 分页按钮 -->
+		<div class="box">
+			<div class="M-box1 m-style pages"></div>
+		</div>
+		
+
+		<!-- 职位添加模态框 -->
+		<div class="modal fade" id="job_box" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">职位信息</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<form>
+		      		<div class="form-group">
+					    <label for="InputFile">公司logo</label>
+					    <input type="file" id="InputFile">
+					    <img id="showImg" src="" alt="" style="height:50px;width:50px">
+					</div>
+		      		<div class="form-group">
+					    <label for="exampleInputEmail1">职位名称</label>
+					    <input type="text" class="form-control" id="jobname" placeholder="输入职位名">
+					</div>
+					<div class="form-group">
+					    <label for="exampleInputEmail1">公司名称</label>
+					    <input type="text" class="form-control" id="cpname" placeholder="输入公司名称">
+					</div>
+					<div class="form-group">
+					    <label for="exampleInputEmail1">工作经验</label>
+					    <input type="text" class="form-control" id="jobexp" placeholder="输入工作经验">
+					</div>
+					<div class="form-group">
+					    <label for="exampleInputEmail1">职位类型</label>
+					    <input type="text" class="form-control" id="jobtype" placeholder="输入职位类型">
+					</div>
+					<div class="form-group">
+					    <label for="exampleInputEmail1">工作地点</label>
+					    <input type="text" class="form-control" id="jobstr" placeholder="输入工作地点">
+					</div>
+					<div class="form-group">
+					    <label for="exampleInputEmail1">岗位薪资</label>
+					    <input type="text" class="form-control" id="salary" placeholder="输入岗位薪资">
+					</div>
+		      	</form>
+		      </div>
+		      <div class="modal-footer">
+		      	<button type="button" class="btn btn-default hidden" data-dismiss="modal" id="addclose">Close</button>
+		        <button type="button" class="btn btn-primary" id="add_btn">提交</button>
+		        <button type="button" class="btn btn-primary" style="display: none;" id="update_btn">提交</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+</body>
+<script type="text/html" id="listTemp">
+    {{each list as item index}}
+		<tr class="add_" data-id="{{item.userid}}">
+			<td class="num">{{index + 1}}</td>
+			<td><img src="{{item.logo}}"></td>
+			<td class="jobname">{{item.jobname}}</td>
+			<td class="cpname">{{item.cpname}}</td>
+			<td class="jobexp">{{item.jobexp}}</td>
+			<td class="jobtype">{{item.jobtype}}</td>
+			<td class="jobstr">{{item.jobstr}}</td>
+			<td class="salary">{{item.salary}}</td>
+			<td><span class="update" data-id="{{item._id}}" data-toggle="modal" data-target="#job_box">修改</span><span class="del" data-id="{{item._id}}">删除</span></td>
+		</tr>
+    {{/each}}
+</script>
+</html>
