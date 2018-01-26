@@ -82,6 +82,11 @@
 			width: 50px;
 			height: 50px;
 		}
+		.search{
+			position: absolute;
+			right: 192px;
+			top: 60px;
+		}
 	</style>
 </head>
 <body>
@@ -102,7 +107,14 @@
 		</div>
 	</header>
 	<div class="warp">
-		<p><span>用户管理</span>
+		<p><span>用户管理</span></p>
+		<form class="form-inline search">
+		  <div class="form-group">
+		    <input type="text" class="form-control" id="search_box" placeholder="输入用户名搜索">
+		  </div>
+		  <button type="button" id="search_btn" class="btn btn-default">搜索</button>
+		</form>	
+		
 		<table class="table table-bordered" style="width: 70%;margin: auto;position: relative;" id="user_list">
 			<tr>
 				<th>用户ID</th>
@@ -177,10 +189,10 @@
 			<td class="userpwd">{{list.pwd}}</td>
 			<td class="useremail">{{list.email}}</td>
 			<td>
-				<span class="update" data-toggle="modal" data-target="#user_box">修改</span>
-				<span class="del">删除</span>
-				<span class="down">展开</span>
-				<span class="up" style="display: none;">收起</span>
+				<button type="button" class="btn btn-info btn-xs update" data-toggle="modal" data-target="#user_box">修改</button>
+				<button type="button" class="btn btn-danger btn-xs del">删除</button>
+				<button type="button" class="btn btn-info btn-xs down">展开</button>
+				<button type="button" class="btn btn-info btn-xs up" style="display: none;">收起</button>
 			</td>
 		</tr>
     {{/each}}

@@ -15,37 +15,56 @@ $(function(){
 		$("#login").hide();
 	 	$("#regist").hide();
 	 	$("#off").show();
+	}else{
+		storage.pages = 1;
 	}
 	if(cookie_userid == "5a669663fb35e015ac3c1248" && $user_title.text() == "admin"){
  		$("#admin").show();
  	}else{
  		$("#admin").hide();
  	}
+
 	//用户注册
 	$("#rs_btn").on('click', function(){
-		var params = {};
-		params.username = $("#rsname").val().trim();
-		params.pwd = $("#rspwd").val().trim();
-		params.email = $("#rsemail").val().trim();
-		if (!params.username||!params.pwd ) {
-			 alert("不能为空！");
+		var pamars = {};
+		pamars.username = $("#rsname").val().trim();
+		pamars.pwd = $("#rspwd").val().trim();
+		pamars.email = $("#rsemail").val().trim();
+		if (!pamars.username) {
+			 alert("用户名不能为空！");
 			 return
 		};
 
-        if (params.pwd != $("#rsrepwd").val().trim()) {
+		if (!pamars.pwd) {
+			 alert("密码不能为空！");
+			 return
+		};
+
+        if (pamars.pwd != $("#rsrepwd").val().trim()) {
             alert("密码不一致！");
             return
         };
 
-	    $.post('/api/regist', params, function(data) {
+        if (!pamars.email) {
+			 alert("邮箱不能为空！");
+			 return
+		};
+
+		var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+		if(!reg.test(pamars.email)){
+			alert("邮箱格式不正确！");
+			return
+		}
+
+	    $.post('/api/regist', pamars, function(data) {
 	    	 // console.log(data);
 	    	 if (!data.code) {
 	    	 	var userid = data.doc._id;
-	    	 	$.cookie("username",params.username,{path:'/'});
+	    	 	$.cookie("username",pamars.username,{path:'/'});
 	    	 	$.cookie("userid",userid,{path:'/'});
 	    	 	$("#rsclose").click();
 	    	 	$("#login").hide();
-	    	 	$user_title.text(params.username).attr('data-id', userid);
+	    	 	$user_title.text(pamars.username).attr('data-id', userid);
 	    	 	$("#regist").hide();
 	    	 	$("#off").show();
 	    	 	if(userid == "5a669663fb35e015ac3c1248"){
@@ -65,7 +84,7 @@ $(function(){
 	    $("#regist").show();
 	    $.cookie("username","",{path:'/'});
 	    $("#admin").hide();
-	    storage.pages = 1;
+	    location = "/index.html";
 	});
 
 	//打开登录模态框事件
@@ -76,19 +95,19 @@ $(function(){
 	//用户登录
 	$("#lg_btn").on('click',function(event) {
 		event.preventDefault();
-		var params = {};
-		params.username = $("#lgname").val().trim();
-		params.pwd = $("#lgpwd").val().trim();
+		var pamars = {};
+		pamars.username = $("#lgname").val().trim();
+		pamars.pwd = $("#lgpwd").val().trim();
 
-	    $.post('/api/login', params, function(data) {
+	    $.post('/api/login', pamars, function(data) {
 	    	 // console.log(data);
 	    	 if (!data.code) {
 	    	 	var userid = data.doc[0]._id;
-	    	 	$.cookie("username",params.username,{path:'/'});
+	    	 	$.cookie("username",pamars.username,{path:'/'});
 	    	 	$.cookie("userid",userid,{path:'/'});
                 $("#lgclose").click();
 	    	 	$("#login").hide();
-	    	 	$user_title.text(params.username).attr('data-id', userid);
+	    	 	$user_title.text(pamars.username).attr('data-id', userid);
 	    	 	$("#regist").hide();
 	    	 	$("#off").show();
 	    	 	if(userid == "5a669663fb35e015ac3c1248"){

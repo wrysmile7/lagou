@@ -5,27 +5,31 @@ $(function(){
 	
 	var storage=window.localStorage;
 	//判断用户是否登录
-	var cookie_username = $.cookie("username"),
-		cookie_userid = $.cookie("userid");
-	$user_title.text(cookie_username).attr('data-id', cookie_userid);
-	if($user_title.text()){
-		$("#login").hide();
-	 	$("#regist").hide();
-	 	$("#off").show();
-	}else{
-		alert("请先登录！");
-	    location = "/index.html";
+	function redcookie(){
+		var cookie_username = $.cookie("username"),
+			cookie_userid = $.cookie("userid");
+		$user_title.text(cookie_username).attr('data-id', cookie_userid);
+		if($user_title.text()){
+			$("#login").hide();
+		 	$("#regist").hide();
+		 	$("#off").show();
+		}else{
+			alert("请先登录！");
+			storage.pages = 1;
+		    location = "/index.html";
+		}
+		if(cookie_userid == "5a669663fb35e015ac3c1248"){
+	 		$("#admin").show();
+	 	}
 	}
-	if(cookie_userid == "5a669663fb35e015ac3c1248"){
- 		$("#admin").show();
- 	}
+	redcookie();
+	
 
 	//用户注销
 	$("#off").on('click', function(){
 	    $.cookie("username","",{path:'/'});
 	    alert("用户已退出登录！");
 	    location = "/index.html";
-	    storage.pages = 1;
 	});
 
 	
@@ -82,7 +86,7 @@ $(function(){
 	
 	
 	//序号
-	function index(pag){
+	function index(pag = 1){
 		var len = $('.add_').length;
 		for(let i = 0; i < len; i++){
 			// console.log(i);
@@ -186,8 +190,8 @@ $(function(){
 				storage.pages -= 1;
 			}			
 			user_id.page = storage.pages;
-			loadjob(user_id);
 			pageload();
+			loadjob(user_id);
 		}else{
 			$job_list.find('.add_').remove();
 			user_id.page = storage.pages;

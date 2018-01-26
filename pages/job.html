@@ -120,7 +120,7 @@
 		</div>
 	</header>
 	<div class="warp">
-		<p><span>职位管理</span><button type="button" class="btn btn-primary btn-xs tj" data-toggle="modal" data-target="#job_box">添加</button></p>
+		<p><span>职位管理</span><button type="button" class="btn btn-primary btn-success btn-xs tj" data-toggle="modal" data-target="#job_box">添加</button></p>
 		<table class="table table-bordered" style="width: 70%;margin: auto;" id="job_list">
 			<tr>
 				<th>序号</th>
@@ -185,8 +185,8 @@
 		      </div>
 		      <div class="modal-footer">
 		      	<button type="button" class="btn btn-default hidden" data-dismiss="modal" id="addclose">Close</button>
-		        <button type="button" class="btn btn-primary" id="add_btn">提交</button>
-		        <button type="button" class="btn btn-primary" style="display: none;" id="update_btn">提交</button>
+		        <button type="button" class="btn btn-primary btn-info" id="add_btn">提交</button>
+		        <button type="button" class="btn btn-primary btn-info" style="display: none;" id="update_btn">提交</button>
 		      </div>
 		    </div>
 		  </div>
@@ -204,7 +204,10 @@
 			<td class="jobtype">{{item.jobtype}}</td>
 			<td class="jobstr">{{item.jobstr}}</td>
 			<td class="salary">{{item.salary}}</td>
-			<td><span class="update" data-id="{{item._id}}" data-toggle="modal" data-target="#job_box">修改</span><span class="del" data-id="{{item._id}}">删除</span></td>
+			<td>
+				<button type="button" class="btn btn-info btn-xs update"data-id="{{item._id}}" data-toggle="modal" data-target="#job_box">修改</button>
+				<button type="button" class="btn btn-danger btn-xs del" data-id="{{item._id}}">删除</button>
+			</td>
 		</tr>
     {{/each}}
 </script>

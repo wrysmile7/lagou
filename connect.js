@@ -202,6 +202,21 @@ app.get('/api/userlist', function(req,res){
 	});
 });
 
+
+//用户搜索
+app.post('/api/usersearch', function(req,res){
+	let {username} = req.body;
+	User.find({username},function(err,doc){
+		if (err) {
+			return
+		}
+		res.json({
+			code:0,
+			userlist:doc
+		});
+	});
+});
+
 //用户删除
 app.post('/api/userdel', function(req,res){
 	let {_id} = req.body;
@@ -220,6 +235,19 @@ app.post('/api/userdel', function(req,res){
 //用户信息修改
 app.post('/api/userupdate', function(req,res){
 	let {_id,pwd,email} = req.body;
+	if(pwd == ""){
+		User.findOneAndUpdate({_id},{$set:{email}},{new:true}, function(err,doc){
+			if (err) {
+				console.log(err);
+				return
+			}
+			res.json({
+				code:0,
+				doc:doc
+			});	
+		});
+		return
+	}
 	User.findOneAndUpdate({_id},{$set:{pwd,email}},{new:true}, function(err,doc){
 		if (err) {
 			console.log(err);
@@ -234,15 +262,6 @@ app.post('/api/userupdate', function(req,res){
 
 
 
-
-//用户在职位管理页面注销处理
-// app.get('/api/zxlg', function(req,res){
-// 	res.json({
-// 		code:0,
-// 		doc:"注销成功"
-// 	});
-	
-// });
 
 app.listen(8888,function(){
 	console.log("启动成功！")
